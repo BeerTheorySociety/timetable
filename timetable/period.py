@@ -15,9 +15,14 @@ class Period(object):
     ----------
     number : int
         period number in day.
+    time : string
+        time of day
     courses : dict
         Dictionary with subjects mapped to course object (containing all student
         imformation as well.)
+    *course : course objects
+        These are flexible attributes named after courses
+
 
     Metadata
     --------
@@ -30,9 +35,20 @@ class Period(object):
         ]
     }
     """
-    def __init__(self, number, *courses):
+    def __init__(self, number, time, *courses):
         self.number = number
+        self.time = time
         self._courses = {}
 
         for course in courses:
-            self._courses[course.subject] = course
+            self.add(course)
+
+    def add(self, course):
+        """Add course to period."""
+        self._courses[course.subject] = course
+        setattr(self, course.subject, course)
+
+    def rm(self, course):
+        """Remove course from period."""
+        del self._courses[course.subject]
+        delattr(self, course.subject)
