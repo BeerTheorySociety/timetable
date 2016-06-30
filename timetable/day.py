@@ -62,10 +62,7 @@ class Day(BaseContainerHandler):
     }
     """
     def __init__(self, name, *Periods, **attrs):
-        self._contents = {}
-        self._attributes = {}
-        for Period in Periods:
-            self.add(period)
+        super(Day, self).__init__(name=name, *Periods, **attrs)
 
     @property
     def periods(selfs):

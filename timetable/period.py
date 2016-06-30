@@ -1,9 +1,9 @@
 """
 """
 
-from .course import Course
+from .base import BaseContainerHandler
 
-class Period(object):
+class Period(BaseContainerHandler):
     """Period object, containing data about all classes during this period of day.
 
     Arguments
@@ -63,42 +63,3 @@ class Period(object):
         self._attrs = {}
         self.add(*courses)
         self.addattr(**attrs)
-
-    @staticmethod
-    def _check_type(item):
-        """ Check that the item is a Course object.
-        """
-        if item.__class__ != "Course":
-            raise Exception("""Argument must be a Period object!""")
-
-    def _assign_id(self, course):
-        """Assigns an `id` to a Course object.
-        """
-        # Check that argument is actually a Course object
-        self._check_type(course)
-        # If the course doesn't already have an ID, give it one
-        if hasattr(course, "id") is False:
-            prefix = "PER"
-            number = 0
-            new_id = prefix + "%06d" % number
-            while new_id in self._contents.keys():
-                number += 1
-                new_id = prefix + "%06d" % number
-            self.course.add(id=new_id)
-        # If ID exists in Course, check that it isn't in this object already
-        else:
-            if period.id in self._contents:
-                raise Exception("""A Course object with the same ID already exists
-                in the Course object.
-                """)
-
-    def add(self, *courses):
-        """Add course to period."""
-        for course in courses:
-            self._courses[course.subject] = course
-            setattr(self, course.subject, course)
-
-    def rm(self, course):
-        """Remove course from period."""
-        del self._courses[course.subject]
-        delattr(self, course.subject)

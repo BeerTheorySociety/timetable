@@ -4,7 +4,7 @@
 from .base import BaseContainerHandler
 
 class Course(BaseContainerHandler):
-    """ Course object. Holds all the information about
+    """Course object. Holds all the information about
 
     Arguments
     ---------
@@ -30,35 +30,7 @@ class Course(BaseContainerHandler):
         "id" : "COU000001",
         "name" : "Math 7"
         "Instructor" : "INS000001",
-        "size" : 28,
     }
-
-
     """
-    def __init__(self, subject, teacher, period):
-        self.teacher = teacher
-        self.period = period
-        self.subject = subject
-        self._students = {}
-
-    @property
-    def size(self):
-        """Get class size
-        """
-        return len(self._students)
-
-    @property
-    def names(self):
-        """Return list of student names.
-        """
-        return list(self._students.keys())
-
-    def add(self, student):
-        """Add student to course.
-        """
-        self._students[student.name] = student
-
-    def rm(self, student):
-        """Remove student from course.
-        """
-        del self._students[student.name]
+    def __init__(self, name, *Teacher):
+        super(Course, self).__init__(name=name, *Teacher)

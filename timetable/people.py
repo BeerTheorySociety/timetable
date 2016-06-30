@@ -1,6 +1,8 @@
 """This module contains all people objects involved in planning a schedule.
 """
-class Student(object):
+from .base import BaseHandler
+
+class Student(BaseHandler):
     """ Student object
 
     Arguments
@@ -47,15 +49,14 @@ class Student(object):
         }
     }
     """
-    def __init__(self, id, required, desired, **kwargs):
+    def __init__(self, name, required, desired, **attrs):
         # Initialize required attributes.
-        self._attrs = {}
-        self.addattr(id=id,
+        super(Student, self).__init__(
+            name=name,
             required=required,
-            desired=desired,
-            **kwargs
+            desired=desired
+            **attrs
         )
-        self._schedule = {}
         self.happiness = 0
 
     @property
@@ -68,90 +69,7 @@ class Student(object):
                 break
         return satisfied
 
-    @property
-    def schedule(self):
-        """Get the students courses."""
-        return self._schedule
-
-    @property
-    def courses(self):
-        """Return mapping of subject to course object"""
-        return dict([(course.subject, course) for course in self._schedule.values()])
-
-    @property
-    def attrs(self):
-        """Get attributes of student"""
-        return self._attrs
-
-    def addattr(self, **kwargs):
-        """Add attributes to student object
-        """
-        for key, value in kwargs.items():
-            self._attrs[key] = value
-            setattr(self, key, value)
-
-    def rmattr(self, *args):
-        """Remove attributes from student object."""
-        for key in args:
-            del self._attrs[key]
-            delattr(self, key)
-
-    def add(self, course):
-        """Add a course to period of the day
-        """
-        self._schedule[course.period] = course
-
-    def rm(self, period):
-        """
-        """
-        del self._schedule[course.period]
-
-
-class StudentGroup(object):
-    """Container object for a group of students.
-
-    Arguments
-    ---------
-    students : dict
-        student id mapped to student object
-    """
-    def __init__(self, students={}):
-        # Initialize students metadata
-        self._students = {}
-
-        # Add students to group
-        for id, student in students.items():
-            self.add(id, student)
-
-    @property
-    def students(self):
-        """Get metadata of object (dict of students)"""
-        return self._students
-
-    @property
-    def names(self):
-        """Get list of student names in group."""
-        return [s.name for s in self._students.values()]
-
-    @property
-    def ids(self):
-        """Return list of student ids""""
-        return [s.id for s in self._students.values()]
-
-    def add(self, id, student):
-        """Add student to group
-        """
-        self._students[id] = student
-        setattr(self, id, student)
-
-    def rm(self, id):
-        """Remove student from group."""
-        del self._students[id]
-        delattr(self, id)
-
-
-
-class Instructor(object):
+class Instructor(BaseHandler):
     """
 
     Metadata
@@ -162,5 +80,5 @@ class Instructor(object):
     }
 
     """
-    def __init__(self, **kwargs):
-        self._schedule = {}
+    def __init__(self, name, **attrs):
+        super(Instructor, self).__init__(name=name, **attrs)
