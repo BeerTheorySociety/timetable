@@ -1,6 +1,6 @@
-from .day import Day
+from .base import BaseContainerHandler
 
-class TimeTable(object):
+class TimeTable(BaseContainerHandler):
     """ Object that contains a Timetable to construct schedules. This object
     describes the days in week, periods in day, courses in period, and
     instructors in periods.
@@ -45,8 +45,7 @@ class TimeTable(object):
                     "COU000001",
                     "COU000002",
                     ...
-                ],
-
+                ]
             },
             {
                 "id" : "PER0000002",
@@ -55,8 +54,7 @@ class TimeTable(object):
                     "COU000003",
                     "COU000004",
                     ...
-                ],
-
+                ]
             },
         ]
         "Courses" : [
@@ -82,56 +80,8 @@ class TimeTable(object):
             }
         ]
     }
-
-
     """
-    def __init__(self, *Days):
-        self._contents = {}
-        for Day in Days:
-            self.add(Day)
-
     @property
     def days(self):
         """Get dictionary of Day objects. """
         return self._contents
-
-    def add(self, day):
-        """Add Day object to TimeTable.
-        """
-        self._assign_id(day)
-        setattr(self, day.id, day)
-        self._contents[day.id] = day
-
-    @staticmethod
-    def _check_type(item):
-        """ Check that the item is a Day object.
-        """
-        if item.__class__ != "Day":
-            raise Exception("""Argument must be a Day object!""")
-
-    def _assign_id(self, day):
-        """Assigns an `id` to a Day object.
-        """
-        # Check that argument is actually a Day object
-        self._check_type(day)
-        # If the day doesn't already have an ID, give it one
-        if hasattr(day, "id") is False:
-            prefix = "DAY"
-            number = 0
-            new_id = prefix + "%06d" % number
-            while new_id in self._contents.keys():
-                number += 1
-                new_id = prefix + "%06d" % number
-            self.day.add(id=new_id)
-        # If ID exists in day, check that it isn't in this object already
-        else:
-            if day.id in self._contents:
-                raise Exception("""A Day object with the same ID already exists
-                in the timetable object.
-                """)
-
-    def rm(self, id):
-        """Remove Day with `id` from timetable.
-        """
-        delattr(self, id)
-        del self._contents[id]

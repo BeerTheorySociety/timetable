@@ -1,9 +1,9 @@
 """Module for managing course objects
 """
 
-from .people import Students
+from .base import BaseContainerHandler
 
-class Course(object):
+class Course(BaseContainerHandler):
     """ Course object. Holds all the information about
 
     Arguments
@@ -27,13 +27,10 @@ class Course(object):
     Metadata
     --------
     course = {
-        "period" : 1,
-        "teacher" : "Bob",
-        "subject" : "Math",
-        "students" : [
-            "Alice",
-            "Charles"
-        ]
+        "id" : "COU000001",
+        "name" : "Math 7"
+        "Instructor" : "INS000001",
+        "size" : 28,
     }
 
 

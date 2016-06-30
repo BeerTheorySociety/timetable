@@ -1,5 +1,8 @@
 """
 """
+
+from .course import Course
+
 class Period(object):
     """Period object, containing data about all classes during this period of day.
 
@@ -27,26 +30,73 @@ class Period(object):
     Metadata
     --------
     period = {
-        "number" : 1,
-        "courses" : [
-            "Math 7",
-            "English 8",
-            ...
+        "id" : "PER0000001",
+        "time" : "9AM",
+        "Courses" : [
+            {
+                "id" : "COU000001",
+                "name" : "Math 7"
+                "Instructor" : "INS000001",
+            },
+            {
+                "id" : "COU000002",
+                "name" : "Science 8"
+                "Instructor" : "INS000002",
+            }
+        ],
+        "Instructors" : [
+            {
+                "id" : "INS000001",
+                "name" : "Bob",
+            },
+            {
+                "id" : "INS000002",
+                "name" : "Alice"
+            }
         ]
     }
     """
-    def __init__(self, number, time, *courses):
+    def __init__(self, time, *courses, **attrs):
         self.number = number
         self.time = time
-        self._courses = {}
+        self._contents = {}
+        self._attrs = {}
+        self.add(*courses)
+        self.addattr(**attrs)
 
-        for course in courses:
-            self.add(course)
+    @staticmethod
+    def _check_type(item):
+        """ Check that the item is a Course object.
+        """
+        if item.__class__ != "Course":
+            raise Exception("""Argument must be a Period object!""")
 
-    def add(self, course):
+    def _assign_id(self, course):
+        """Assigns an `id` to a Course object.
+        """
+        # Check that argument is actually a Course object
+        self._check_type(course)
+        # If the course doesn't already have an ID, give it one
+        if hasattr(course, "id") is False:
+            prefix = "PER"
+            number = 0
+            new_id = prefix + "%06d" % number
+            while new_id in self._contents.keys():
+                number += 1
+                new_id = prefix + "%06d" % number
+            self.course.add(id=new_id)
+        # If ID exists in Course, check that it isn't in this object already
+        else:
+            if period.id in self._contents:
+                raise Exception("""A Course object with the same ID already exists
+                in the Course object.
+                """)
+
+    def add(self, *courses):
         """Add course to period."""
-        self._courses[course.subject] = course
-        setattr(self, course.subject, course)
+        for course in courses:
+            self._courses[course.subject] = course
+            setattr(self, course.subject, course)
 
     def rm(self, course):
         """Remove course from period."""

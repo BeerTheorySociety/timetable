@@ -107,7 +107,7 @@ class Student(object):
         del self._schedule[course.period]
 
 
-class StudentList(object):
+class StudentGroup(object):
     """Container object for a group of students.
 
     Arguments
@@ -151,8 +151,16 @@ class StudentList(object):
 
 
 
-class Teacher(object):
+class Instructor(object):
     """
+
+    Metadata
+    --------
+    instructor = {
+        "id" : "INS000001",
+        "name" : "Bob",
+    }
+
     """
     def __init__(self, **kwargs):
         self._schedule = {}
