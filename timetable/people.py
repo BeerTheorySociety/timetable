@@ -26,6 +26,7 @@ class Student(object):
     Metadata
     --------
     student = {
+        "id" : "XX00000000"
         "name" : "Alice",
         "satisfied": True,
         "happiness" : 0.5,
@@ -46,16 +47,16 @@ class Student(object):
         }
     }
     """
-    def __init__(self, name, required, desired):
+    def __init__(self, id, required, desired, **kwargs):
         # Initialize required attributes.
-        self.addattr(name=name,
+        self._attrs = {}
+        self.addattr(id=id,
             required=required,
-            desired=desired
+            desired=desired,
+            **kwargs
         )
         self._schedule = {}
         self.happiness = 0
-        self.satisfied = False
-
 
     @property
     def satisfied(self):
@@ -75,7 +76,7 @@ class Student(object):
     @property
     def courses(self):
         """Return mapping of subject to course object"""
-        return dict([(course.subject, course) for course self._schedule.values()])
+        return dict([(course.subject, course) for course in self._schedule.values()])
 
     @property
     def attrs(self):
@@ -103,7 +104,51 @@ class Student(object):
     def rm(self, period):
         """
         """
-        del self._schedule[course.period] = course
+        del self._schedule[course.period]
+
+
+class StudentList(object):
+    """Container object for a group of students.
+
+    Arguments
+    ---------
+    students : dict
+        student id mapped to student object
+    """
+    def __init__(self, students={}):
+        # Initialize students metadata
+        self._students = {}
+
+        # Add students to group
+        for id, student in students.items():
+            self.add(id, student)
+
+    @property
+    def students(self):
+        """Get metadata of object (dict of students)"""
+        return self._students
+
+    @property
+    def names(self):
+        """Get list of student names in group."""
+        return [s.name for s in self._students.values()]
+
+    @property
+    def ids(self):
+        """Return list of student ids""""
+        return [s.id for s in self._students.values()]
+
+    def add(self, id, student):
+        """Add student to group
+        """
+        self._students[id] = student
+        setattr(self, id, student)
+
+    def rm(self, id):
+        """Remove student from group."""
+        del self._students[id]
+        delattr(self, id)
+
 
 
 class Teacher(object):

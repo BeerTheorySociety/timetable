@@ -1,5 +1,8 @@
 """Module for managing course objects
 """
+
+from .people import Students
+
 class Course(object):
     """ Course object. Holds all the information about
 
