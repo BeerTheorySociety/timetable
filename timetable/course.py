@@ -2,6 +2,7 @@
 """
 
 from .base import BaseContainerHandler
+from .people import Instructor
 
 class Course(BaseContainerHandler):
     """Course object. Holds all the information about
@@ -34,3 +35,11 @@ class Course(BaseContainerHandler):
     """
     def __init__(self, name, *Teacher):
         super(Course, self).__init__(name=name, *Teacher)
+
+    @property
+    def _prefix(self):
+        return "COU"
+
+    @property
+    def _child_type(self):
+        return Instructor

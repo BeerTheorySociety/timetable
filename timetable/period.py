@@ -2,6 +2,7 @@
 """
 
 from .base import BaseContainerHandler
+from .course import Course
 
 class Period(BaseContainerHandler):
     """Period object, containing data about all classes during this period of day.
@@ -63,3 +64,11 @@ class Period(BaseContainerHandler):
         self._attrs = {}
         self.add(*courses)
         self.addattr(**attrs)
+
+    @property
+    def _prefix(self):
+        return "PER"
+
+    @property
+    def _child_type(self):
+        return Course

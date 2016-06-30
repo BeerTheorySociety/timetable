@@ -1,4 +1,5 @@
 from .base import BaseContainerHandler
+from .period import Period
 
 class Day(BaseContainerHandler):
     """Day object for managing all periods in day.
@@ -69,3 +70,11 @@ class Day(BaseContainerHandler):
         """Get periods in day.
         """
         return self._contents
+
+    @property
+    def _prefix(self):
+        return "DAY"
+
+    @property
+    def _child_type(self):
+        return Period

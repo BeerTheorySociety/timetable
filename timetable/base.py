@@ -1,29 +1,16 @@
 __doc__ = """
 Base module for TimeTable package.
 """
-
-CONTENTS = {
-    "TimeTable" : "Day",
-    "Day" : "Period",
-    "Period" : "Course",
-    "Course" : "Instructor",
-    "StudentList" : "Student"
-}
-
-PREFIX = {
-    "Day" : "DAY",
-    "Period" : "PER",
-    "Course" : "COU",
-    "Student" : "STU",
-    "Instructor" : "INS"
-}
-
-def BaseHandler(object):
+class BaseHandler(object):
     """ Object that manages atttribute data.
     """
     def __init__(self, **attrs):
         self._attrs = {}
         self.addattr(**attrs)
+
+    @property
+    def attrs(self):
+        return self._attrs
 
     def addattr(self, **attrs):
         """ Add attribute to Handler
@@ -49,18 +36,29 @@ class BaseContainerHandler(BaseHandler):
         self.add(*items)
 
     @property
+    def contents(self):
+        return self._contents
+
+    @property
     def _type_exception_message(self):
         return """And object already exists in contents with the same ID."""
 
-    @staticmethod
-    def _check_type(item):
+    @property
+    def _prefix(self):
+        raise Exception("""Must be implemented in a Subclass.""")
+
+    @property
+    def _child_type(self):
+        raise Exception("""Must be implemented in a Subclass.""")
+
+    def _check_type(self, item):
         """ Check that the item is an expected object.
         """
-        if item.__class__ != CONTENTS[self.__class__]:
+        if item.__class__ != self._child_type:
             raise Exception("Argument must be a " + \
-                CONTENTS[self.__class__]+ " object!")
+                str(self._child_type) + " object!")
 
-    def _assign_id(self, prefix, item):
+    def _assign_id(self, item):
         """Assigns an `id` to object, with a given prefix.
         """
         # Check that argument is an expected object
@@ -68,25 +66,27 @@ class BaseContainerHandler(BaseHandler):
         # If the object doesn't already have an ID, give it one
         if hasattr(item, "id") is False:
             number = 0
-            new_id = prefix + "%06d" % number   # 9-character ID
+            new_id = item._prefix + "%06d" % number   # 9-character ID
             while new_id in self._contents.keys():
                 number += 1
-                new_id = prefix + "%06d" % number
-            self.item.addattr(id=new_id)
+                new_id = item._prefix + "%06d" % number
+            item.addattr(id=new_id)
         # If ID exists in object, check that it isn't in this object already
         else:
             if item.id in self._contents:
                 raise Exception(self._type_exception_message)
 
-    def add(self, item):
+    def add(self, *items):
         """Add object to Handler.
         """
-        self._assign_id(item)
-        setattr(self, item.id, item)
-        self._contents[item.id] = item
+        for item in items:
+            self._assign_id(item)
+            setattr(self, item.id, item)
+            self._contents[item.id] = item
 
-    def rm(self, id):
+    def rm(self, *ids):
         """Remove object with `id` from Handler.
         """
-        delattr(self, id)
-        del self._contents[id]
+        for id in ids:
+            delattr(self, id)
+            del self._contents[id]

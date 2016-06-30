@@ -1,4 +1,5 @@
 from .base import BaseContainerHandler
+from .day import Day
 
 class TimeTable(BaseContainerHandler):
     """ Object that contains a Timetable to construct schedules. This object
@@ -85,3 +86,7 @@ class TimeTable(BaseContainerHandler):
     def days(self):
         """Get dictionary of Day objects. """
         return self._contents
+
+    @property
+    def _child_type(self):
+        return Day

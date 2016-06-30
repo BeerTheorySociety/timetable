@@ -54,7 +54,7 @@ class Student(BaseHandler):
         super(Student, self).__init__(
             name=name,
             required=required,
-            desired=desired
+            desired=desired,
             **attrs
         )
         self.happiness = 0
@@ -69,6 +69,10 @@ class Student(BaseHandler):
                 break
         return satisfied
 
+    @property
+    def _prefix(self):
+        return "STU"
+
 class Instructor(BaseHandler):
     """
 
@@ -82,3 +86,7 @@ class Instructor(BaseHandler):
     """
     def __init__(self, name, **attrs):
         super(Instructor, self).__init__(name=name, **attrs)
+
+    @property
+    def _prefix(self):
+        return "INS"
