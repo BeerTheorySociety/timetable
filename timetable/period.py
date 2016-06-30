@@ -58,12 +58,7 @@ class Period(BaseContainerHandler):
     }
     """
     def __init__(self, time, *courses, **attrs):
-        self.number = number
-        self.time = time
-        self._contents = {}
-        self._attrs = {}
-        self.add(*courses)
-        self.addattr(**attrs)
+        super(Period, self).__init__(time=time, *courses, **attrs)
 
     @property
     def course(self):

@@ -82,6 +82,9 @@ class TimeTable(BaseContainerHandler):
         ]
     }
     """
+    def __init__(self, *Days, **attrs):
+        super(TimeTable, self).__init__(*Days, **attrs)
+
     @property
     def days(self):
         """Get dictionary of Day objects. """
