@@ -55,8 +55,8 @@ class BaseContainerHandler(BaseHandler):
         """ Check that the item is an expected object.
         """
         if item.__class__ != self._child_type:
-            raise Exception("Argument must be a " + \
-                str(self._child_type) + " object!")
+            raise Exception("Argument must be a(n) `" + \
+                self._child_type.__name__ + "` object!")
 
     def _assign_id(self, item):
         """Assigns an `id` to object, with a given prefix.
