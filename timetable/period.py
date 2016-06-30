@@ -66,6 +66,11 @@ class Period(BaseContainerHandler):
         self.addattr(**attrs)
 
     @property
+    def course(self):
+        """sGet courses in period."""
+        return self._contents
+
+    @property
     def _prefix(self):
         return "PER"
 

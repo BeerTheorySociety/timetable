@@ -37,6 +37,10 @@ class Course(BaseContainerHandler):
         super(Course, self).__init__(name=name, *Teacher)
 
     @property
+    def instructors(self):
+        return self._contents
+
+    @property
     def _prefix(self):
         return "COU"
 
