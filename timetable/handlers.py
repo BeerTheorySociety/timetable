@@ -1,12 +1,19 @@
 __doc__ = """
 Base module for TimeTable package.
 """
-class BaseHandler(object):
+class Handler(object):
     """ Object that manages atttribute data.
     """
     def __init__(self, **attrs):
         self._attrs = {}
         self.addattr(**attrs)
+
+    @property
+    def metadata(self):
+        """Return attribute metadata (looks the same as self.attrs in this
+        parent class)
+        """
+        return self._attrs
 
     @property
     def attrs(self):
@@ -26,14 +33,21 @@ class BaseHandler(object):
             del self._attrs[attribute]
             delattr(self, attribute)
 
-class BaseContainerHandler(BaseHandler):
+class ContainerHandler(Handler):
     """ Handler inherited by most objects in this package. Manages
     addition/removal of subobjects.
     """
     def __init__(self, *items, **attrs):
-        super(BaseContainerHandler, self).__init__(**attrs)
+        super(ContainerHandler, self).__init__(**attrs)
         self._contents = {}
         self.add(*items)
+
+    @property
+    def metadata(self):
+        """Return metadata for this object."""
+        metdata = dict(self._attrs)
+        for item in self.contents:
+            item.attrs
 
     @property
     def contents(self):

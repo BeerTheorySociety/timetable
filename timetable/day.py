@@ -1,7 +1,7 @@
-from .base import BaseContainerHandler
+from .handlers import ContainerHandler
 from .period import Period
 
-class Day(BaseContainerHandler):
+class Day(ContainerHandler):
     """Day object for managing all periods in day.
 
     Arguments

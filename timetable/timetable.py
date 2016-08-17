@@ -1,7 +1,7 @@
-from .base import BaseContainerHandler
+from .handlers import ContainerHandler
 from .day import Day
 
-class TimeTable(BaseContainerHandler):
+class TimeTable(ContainerHandler):
     """ Object that contains a Timetable to construct schedules. This object
     describes the days in week, periods in day, courses in period, and
     instructors in periods.
@@ -84,11 +84,28 @@ class TimeTable(BaseContainerHandler):
     """
     def __init__(self, *Days, **attrs):
         super(TimeTable, self).__init__(*Days, **attrs)
+        self.keys = ["Days", "Courses", "Periods", "Instructors"]
 
     @property
     def days(self):
         """Get dictionary of Day objects. """
         return self._contents
+
+    @property
+    def metadata(self):
+        """Get all metadata contained within a TimeTable object (pulling from
+        all subobject within).
+        """
+        metadata = dict([(key,{}) for key in self.keys])
+        for day in self.days:
+            metadata["Days"].append(day.attrs)
+            for period in day.period:
+                metadata["Periods"].append(period.attrs)
+                for course in period.courses:
+                    metadata["Courses"].append(course.attrs)
+                    for instructor in course.instructor:
+                        metadata["Instructors"].append(instructor.attrs)
+        return metadata
 
     @property
     def _child_type(self):

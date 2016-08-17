@@ -12,9 +12,9 @@ class Scheduler(object):
     def __init__(self, TimeTable, StudentList, function):
         self.TimeTable = TimeTable
         self.StudentList = StudentList
-        self.func = function
+        self.function = function
 
-    def step(self):
+    def swap(self):
         pass
 
     def optimize(self):

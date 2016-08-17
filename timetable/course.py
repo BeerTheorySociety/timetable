@@ -1,10 +1,10 @@
 """Module for managing course objects
 """
 
-from .base import BaseContainerHandler
+from .handlers import ContainerHandler
 from .people import Instructor
 
-class Course(BaseContainerHandler):
+class Course(ContainerHandler):
     """Course object. Holds all the information about
 
     Arguments
@@ -31,6 +31,8 @@ class Course(BaseContainerHandler):
         "id" : "COU000001",
         "name" : "Math 7"
         "Instructor" : "INS000001",
+        "day" : "Monday",
+        "period" : 0,
     }
     """
     def __init__(self, name, *Teacher):

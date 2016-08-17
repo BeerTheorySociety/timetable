@@ -1,10 +1,10 @@
 """
 """
 
-from .base import BaseContainerHandler
+from .handlers import ContainerHandler
 from .course import Course
 
-class Period(BaseContainerHandler):
+class Period(ContainerHandler):
     """Period object, containing data about all classes during this period of day.
 
     Arguments

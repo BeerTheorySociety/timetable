@@ -1,8 +1,8 @@
 """This module contains all people objects involved in planning a schedule.
 """
-from .base import BaseHandler
+from .handlers import Handler
 
-class Student(BaseHandler):
+class Student(Handler):
     """ Student object
 
     Arguments
@@ -73,7 +73,15 @@ class Student(BaseHandler):
     def _prefix(self):
         return "STU"
 
-class Instructor(BaseHandler):
+    def add_course(course):
+        """Add a course to the student's schedule
+        """
+
+    def rm_course(course_id):
+        """
+        """
+
+class Instructor(Handler):
     """
 
     Metadata

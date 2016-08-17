@@ -1,10 +1,10 @@
 """
 """
 
-from .base import BaseContainerHandler
+from .handlers import ContainerHandler
 from .people import Student
 
-class StudentList(BaseContainerHandler):
+class StudentList(ContainerHandler):
     """ Container object with all Student Objects that need to fit a TimeTable
     object.
     """
@@ -19,3 +19,7 @@ class StudentList(BaseContainerHandler):
     @property
     def _child_type(self):
         return Student
+
+    def find(self, **kwargs):
+        """Find students that fit a set of arguments"""
+        pass
